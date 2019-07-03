@@ -1,0 +1,55 @@
+import { useCallback, useContext, useEffect, useState } from 'react'
+import { AppContext } from '../App'
+
+const firebase = require('firebase/app')
+require('firebase/auth')
+require('firebase/firestore')
+
+const firebaseConfig = {
+  apiKey: 'AIzaSyAyyvTM7b5BKIyRcXHpOyLfHm-cyyo4bRM',
+  authDomain: 'findaccountability.firebaseapp.com',
+  databaseURL: 'https://findaccountability.firebaseio.com',
+  projectId: 'findaccountability',
+  storageBucket: '',
+  messagingSenderId: '970352823649',
+  appId: '1:970352823649:web:d14e39b2557552bf'
+}
+
+const FirebaseProvider = ({ children, notLoggedIn = null }) => {
+  const { context, setContext } = useContext(AppContext)
+  const [initializing, setInitializing] = useState(true)
+
+  const handleSignIn = useCallback(() => {
+    const { firebase } = context
+    const provider = new firebase.auth.GoogleAuthProvider()
+    firebase.auth().signInWithPopup(provider)
+  }, [context])
+
+  const handleSignOut = useCallback(() => {
+    const { firebase } = this.props.context
+    firebase.auth().signOut()
+    this.props.setContext({ user: null })
+  }, [])
+
+  useEffect(() => {
+    const onAuthStateChanged = user => {
+      setContext({ user })
+    }
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig)
+    }
+    firebase.auth().onAuthStateChanged(onAuthStateChanged)
+    const db = firebase.firestore()
+    setContext({
+      db,
+      firebase,
+      handleSignIn: handleSignIn,
+      handleSignOut: handleSignOut,
+    })
+    setInitializing(false)
+  }, [handleSignIn, handleSignOut, setContext])
+
+  return initializing ? null : children
+}
+
+export default FirebaseProvider

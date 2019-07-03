@@ -13,6 +13,7 @@ productivity.
 * Create a profile and describe yourself.
 * Find accountability partners by finding people who are a good match.
 * Track yearly, monthly, weekly, and daily goals.
+* Checklists for daily morning / evening rituals
 * Gamification
 
 ## Technologies used
