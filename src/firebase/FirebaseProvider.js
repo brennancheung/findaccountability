@@ -16,14 +16,13 @@ const firebaseConfig = {
 }
 
 const FirebaseProvider = ({ children, notLoggedIn = null }) => {
-  const { context, setContext } = useContext(AppContext)
+  const { setContext } = useContext(AppContext)
   const [initializing, setInitializing] = useState(true)
 
   const handleSignIn = useCallback(() => {
-    const { firebase } = context
     const provider = new firebase.auth.GoogleAuthProvider()
     firebase.auth().signInWithPopup(provider)
-  }, [context])
+  }, [])
 
   const handleSignOut = useCallback(() => {
     const { firebase } = this.props.context
