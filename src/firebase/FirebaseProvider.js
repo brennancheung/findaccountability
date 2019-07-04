@@ -1,5 +1,6 @@
 import { useCallback, useContext, useEffect, useState } from 'react'
 import { AppContext } from '../App'
+import { assoc } from 'ramda'
 
 const firebase = require('firebase/app')
 require('firebase/auth')
@@ -32,7 +33,7 @@ const FirebaseProvider = ({ children, notLoggedIn = null }) => {
 
   useEffect(() => {
     const onAuthStateChanged = user => {
-      setContext({ user })
+      setContext(assoc('user', user))
     }
     if (!firebase.apps.length) {
       firebase.initializeApp(firebaseConfig)

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import FirebaseProvider from './firebase/FirebaseProvider'
 import AuthorizedApp from './AuthorizedApp'
-import PublicWebsite from './website/PublicWebsite'
+import Login from './website/Login'
 import './App.css'
 
 export const AppContext = React.createContext()
@@ -11,7 +11,7 @@ function App () {
   return (
     <AppContext.Provider value={{ ...context, setContext }}>
       <FirebaseProvider>
-        {context.user ? <AuthorizedApp /> : <PublicWebsite />}
+        {context.user ? <AuthorizedApp /> : <Login />}
       </FirebaseProvider>
     </AppContext.Provider>
   )
