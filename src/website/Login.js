@@ -44,7 +44,7 @@ const Login = () => {
         <Toolbar>
           <MyLocationIcon className={classes.icon} />
           <Typography variant="h6" color="inherit" noWrap>
-            FindAccountability
+            Find Accountability
           </Typography>
         </Toolbar>
       </AppBar>

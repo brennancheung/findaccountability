@@ -26,9 +26,8 @@ const FirebaseProvider = ({ children, notLoggedIn = null }) => {
   }, [])
 
   const handleSignOut = useCallback(() => {
-    const { firebase } = this.props.context
     firebase.auth().signOut()
-    this.props.setContext({ user: null })
+    setContext(assoc('user', null))
   }, [])
 
   useEffect(() => {

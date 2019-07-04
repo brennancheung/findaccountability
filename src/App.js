@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import FirebaseProvider from './firebase/FirebaseProvider'
-import AuthorizedApp from './AuthorizedApp'
+import AuthorizedApp from './components/AuthorizedApp'
 import Login from './website/Login'
+import ThemeManager from './common/ThemeManager'
+import { BrowserRouter as Router } from 'react-router-dom'
 import './App.css'
 
 export const AppContext = React.createContext()
@@ -11,7 +13,11 @@ function App () {
   return (
     <AppContext.Provider value={{ ...context, setContext }}>
       <FirebaseProvider>
-        {context.user ? <AuthorizedApp /> : <Login />}
+        <ThemeManager>
+          <Router>
+            {context.user ? <AuthorizedApp /> : <Login />}
+          </Router>
+        </ThemeManager>
       </FirebaseProvider>
     </AppContext.Provider>
   )
