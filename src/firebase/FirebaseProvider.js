@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { AppContext } from '../App'
 import { assoc } from 'ramda'
 
@@ -17,7 +17,7 @@ const firebaseConfig = {
 }
 
 const FirebaseProvider = ({ children, notLoggedIn = null }) => {
-  const { setContext } = useContext(AppContext)
+  const { setContext, ...context } = useContext(AppContext)
   const [initializing, setInitializing] = useState(true)
 
   const handleSignIn = useCallback(() => {
@@ -49,7 +49,8 @@ const FirebaseProvider = ({ children, notLoggedIn = null }) => {
     setInitializing(false)
   }, [handleSignIn, handleSignOut, setContext])
 
-  return initializing ? null : children
+  const setupComplete = !initializing && Object.keys(context).includes('user')
+  return setupComplete ? children : <div>Loading...</div>
 }
 
 export default FirebaseProvider
