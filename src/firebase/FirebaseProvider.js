@@ -33,6 +33,7 @@ const FirebaseProvider = ({ children, notLoggedIn = null }) => {
   useEffect(() => {
     const onAuthStateChanged = user => {
       setContext(assoc('user', user))
+      setInitializing(false)
     }
     if (!firebase.apps.length) {
       firebase.initializeApp(firebaseConfig)
@@ -45,7 +46,6 @@ const FirebaseProvider = ({ children, notLoggedIn = null }) => {
       handleSignIn: handleSignIn,
       handleSignOut: handleSignOut,
     })
-    setInitializing(false)
   }, [handleSignIn, handleSignOut, setContext])
 
   return initializing ? <div>Loading...</div> : children
