@@ -4,10 +4,9 @@ import { AppContext } from '../App'
 export const useFirebase = () => useContext(AppContext).firebase
 export const useFirestore = () => useFirebase().firestore()
 
-export const useFSCollection = path => {
+export const useFSCollection = fn => {
   const uid = useContext(AppContext).user.uid
-  const firebase = useFirebase()
-  return fn => firebase.collection(fn(uid))
+  return useFirestore().collection(fn(uid))
 }
 
 export const useFSDoc = fn => {
