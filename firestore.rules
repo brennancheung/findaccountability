@@ -1,8 +1,19 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write: if false;
+    function matchesCurrentUser(uid) {
+      return request.auth.uid != null &&
+        request.auth.uid == uid;
+    }
+    match /profiles/{userId} {
+      allow read;
+      allow write: if matchesCurrentUser(userId);
+    }
+    match /users/{userId} {
+      allow read, write: if matchesCurrentUser(userId);
+      match /{document=**} {
+        allow read, write: if matchesCurrentUser(userId);
+      }
     }
   }
 }

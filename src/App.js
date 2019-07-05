@@ -6,7 +6,7 @@ import ThemeManager from './common/ThemeManager'
 import { BrowserRouter as Router } from 'react-router-dom'
 import './App.css'
 
-export const AppContext = React.createContext()
+export const AppContext = React.createContext({ user: null })
 
 function App () {
   const [context, setContext] = useState({})

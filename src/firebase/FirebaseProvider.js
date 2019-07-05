@@ -17,7 +17,7 @@ const firebaseConfig = {
 }
 
 const FirebaseProvider = ({ children, notLoggedIn = null }) => {
-  const { setContext, ...context } = useContext(AppContext)
+  const { setContext } = useContext(AppContext)
   const [initializing, setInitializing] = useState(true)
 
   const handleSignIn = useCallback(() => {
@@ -28,7 +28,7 @@ const FirebaseProvider = ({ children, notLoggedIn = null }) => {
   const handleSignOut = useCallback(() => {
     firebase.auth().signOut()
     setContext(assoc('user', null))
-  }, [])
+  }, [setContext])
 
   useEffect(() => {
     const onAuthStateChanged = user => {
@@ -48,8 +48,7 @@ const FirebaseProvider = ({ children, notLoggedIn = null }) => {
     setInitializing(false)
   }, [handleSignIn, handleSignOut, setContext])
 
-  const setupComplete = !initializing && Object.keys(context).includes('user')
-  return setupComplete ? children : <div>Loading...</div>
+  return initializing ? <div>Loading...</div> : children
 }
 
 export default FirebaseProvider

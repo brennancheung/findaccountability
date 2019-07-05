@@ -1,12 +1,12 @@
 import React from 'react'
 import Navbar from './Navbar'
+import Profile from './Profile'
 import { Redirect, Route, Switch } from 'react-router-dom'
 
 const Dashboard = () => <h1>Dashboard</h1>
 const Actions = () => <h1>Daily Actions</h1>
 const Goals = () => <h1>Goals</h1>
 const FindPartners = () => <h1>Find Partners</h1>
-const MyProfile = () => <h1>My Profile</h1>
 const Reports = () => <h1>Reports</h1>
 
 const AuthorizedApp = () => {
@@ -17,7 +17,7 @@ const AuthorizedApp = () => {
         <Route path="/actions" component={Actions} />
         <Route path="/goals" component={Goals} />
         <Route path="/partners" component={FindPartners} />
-        <Route path="/profile" component={MyProfile} />
+        <Route path="/profile" component={Profile} />
         <Route path="/reports" component={Reports} />
         <Redirect to="/" />
       </Switch>
