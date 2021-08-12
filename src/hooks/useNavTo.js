@@ -1,6 +1,6 @@
 import { useHistory } from 'react-router-dom'
 
-export const useNavTo = () => {
+export const useNavTo = url => {
   const history = useHistory()
-  return url => () => history.push(url)
+  return () => history.push(url)
 }

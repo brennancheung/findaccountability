@@ -6,6 +6,8 @@ import { MinimalLayout } from './layout/MinimalLayout'
 
 import { Home } from './pages/Home'
 import { Profile } from './pages/Profile'
+import { MorningRitual } from './pages/MorningRitual'
+import { MorningRitualAdmin } from './pages/MorningRitualAdmin'
 
 const NotFound = () => <h1>Not found</h1>
 
@@ -14,6 +16,8 @@ export const Routes = () => {
     <Router>
       <Switch>
         <RouteWithLayout component={Profile} exact layout={MainLayout} path="/profile" />
+        <RouteWithLayout component={MorningRitual} exact layout={MainLayout} path="/morningRitual" />
+        <RouteWithLayout component={MorningRitualAdmin} exact layout={MainLayout} path="/morningRitualAdmin" />
         <RouteWithLayout component={Home} exact layout={MainLayout} path="/" />
         <RouteWithLayout component={NotFound} exact layout={MinimalLayout} path="/not-found-cover" />
         <Redirect to="/not-found-cover" status="404" />

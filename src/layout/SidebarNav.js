@@ -3,11 +3,12 @@
 import React from 'react'
 import clsx from 'clsx'
 import PropTypes from 'prop-types'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/styles'
 import { useHistory } from 'react-router-dom'
 import { List, ListItem, ListItemText, ListItemIcon } from '@material-ui/core'
 import {
-  Dashboard as DashboardIcon
+  Dashboard as DashboardIcon,
+  WbSunny as WbSunnyIcon,
 } from '@material-ui/icons'
 
 const useStyles = makeStyles(theme => ({
@@ -27,9 +28,9 @@ export const SidebarNav = props => {
         <ListItemIcon><DashboardIcon fontSize="small" /></ListItemIcon>
         <ListItemText primary="Dashboard" />
       </ListItem>
-      <ListItem button className={classes.listItem} onClick={navTo('/profile')}>
-        <ListItemIcon className={classes.listItemIcon}><DashboardIcon fontSize="small" /></ListItemIcon>
-        <ListItemText primary="Profile" />
+      <ListItem button className={classes.listItem} onClick={navTo('/morningRitual')}>
+        <ListItemIcon className={classes.listItemIcon}><WbSunnyIcon fontSize="small" /></ListItemIcon>
+        <ListItemText primary="Morning Ritual" />
       </ListItem>
     </List>
   )

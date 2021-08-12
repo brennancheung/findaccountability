@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react'
 import firebase from 'firebase/app'
+import { useAuth } from './useAuth'
 
 const db = firebase.firestore()
 
-// 'ready' is used as a workaround since 'useFsCollection' will need to be called
-// even when something like the userId is not ready yet.  The 'ready' flag still
-// allows the hooks to be called in order but allows for skipping any action
-// until all the data are ready to fetch the collection
-const useFsCollection = (path, ready=true) => {
+export const useFsUserCollection = (path) => {
+  const { user } = useAuth()
   const [items, setData] = useState(null)
+  const [collection, setCollection] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
 
@@ -17,18 +16,18 @@ const useFsCollection = (path, ready=true) => {
   }
 
   useEffect(() => {
-    if (!path && ready) return
+    if (!path || !user) return
     setLoading(true)
-    const unsubscribe = db.collection(path).onSnapshot(qs => {
+    const fullPath = `/users/${user.uid}${path}`
+    setCollection(db.collection(fullPath))
+    const unsubscribe = db.collection(fullPath).onSnapshot(qs => {
       const items = qs.docs.map(docSnap => docSnap.data())
       setLoading(false)
       setError(false)
       setData(items)
     })
     return unsubscribe
-  }, [path, ready])
+  }, [path, user])
 
-  return [items, { updateDoc, loading, error }]
+  return [items, { collection, updateDoc, loading, error }]
 }
-
-export default useFsCollection

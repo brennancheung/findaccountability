@@ -10,10 +10,10 @@ export const AvatarMenu = ({ user }) => {
   const ref = useRef(null)
   const [open, toggle] = useToggle(false)
   const { signOut } = useAuth()
-  const navTo = useNavTo()
-  const closeAndNav = url => () => {
+  const navToProfile = useNavTo('/profile')
+  const closeAndNav = () => {
     toggle()
-    navTo(url)()
+    navToProfile()
   }
 
   return (
@@ -31,7 +31,7 @@ export const AvatarMenu = ({ user }) => {
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
         transformOrigin={{ vertical: 'top', horizontal: 'center' }}
       >
-        <MenuItem onClick={closeAndNav('/profile')}>My Profile</MenuItem>
+        <MenuItem onClick={closeAndNav}>My Profile</MenuItem>
         <MenuItem onClick={signOut}>Sign Out</MenuItem>
       </Menu>
     </>
