@@ -1,11 +1,17 @@
 import React from 'react'
+import { ThemeProvider } from '@material-ui/core/styles'
+import { AuthProvider } from './hooks/useAuth'
+import { theme } from './theme/theme'
+import { Routes } from './Routes'
 import './App.css'
 
-function App () {
+const App = () => {
   return (
-    <div className="App">
-      <h1>Testing</h1>
-    </div>
+    <AuthProvider>
+      <ThemeProvider theme={theme}>
+        <Routes />
+      </ThemeProvider>
+    </AuthProvider>
   )
 }
 
