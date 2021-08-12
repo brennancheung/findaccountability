@@ -3,15 +3,17 @@ import PropTypes from 'prop-types'
 import clsx from 'clsx'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import {
-  useMediaQuery, AppBar, Badge, Box, CssBaseline, Container, Divider, Drawer,
-  Grid, IconButton, Paper, Toolbar, Typography
+  useMediaQuery, AppBar, Box, CssBaseline, Container, Divider, Drawer,
+  Grid, IconButton, Toolbar, Typography
 } from '@material-ui/core'
 import {
   ChevronLeft as ChevronLeftIcon,
-  Notifications as NotificationsIcon,
   Menu as MenuIcon,
 } from '@material-ui/icons'
+import { CTAButton } from '../components/CTAButton'
+import { AvatarMenu } from '../components/AvatarMenu'
 import { SidebarNav } from './SidebarNav'
+import { useAuth } from '../hooks/useAuth'
 
 const Copyright = () => null
 
@@ -82,8 +84,8 @@ const useStyles = makeStyles(theme => ({
     overflow: 'auto',
   },
   container: {
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4),
+    padding: theme.spacing(4),
+    paddingTop: theme.spacing(8),
   },
   paper: {
     padding: theme.spacing(2),
@@ -101,7 +103,7 @@ export const MainLayout = ({ children }) => {
   const [open, setOpen] = useState(true)
   const openSidebar = () => setOpen(true)
   const closeSidebar = () => setOpen(false)
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
+  const { initialized, user, signInWithGoogle } = useAuth()
 
   const theme = useTheme()
   const isMd = useMediaQuery(theme.breakpoints.up('md'), {
@@ -110,8 +112,10 @@ export const MainLayout = ({ children }) => {
 
   const isOpen = isMd ? false : open
 
+  const Title = ({ children }) => <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>{children}</Typography>
+
   return (
-        <div className={classes.root}>
+    <div className={classes.root}>
       <CssBaseline />
       <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
         <Toolbar className={classes.toolbar}>
@@ -124,14 +128,9 @@ export const MainLayout = ({ children }) => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            Dashboard
-          </Typography>
-          <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
+          <Title>Find Accountability</Title>
+          {initialized && !user && <CTAButton onClick={signInWithGoogle}>Sign In</CTAButton>}
+          {user && <AvatarMenu user={user} />}
         </Toolbar>
       </AppBar>
       <Drawer
@@ -150,13 +149,10 @@ export const MainLayout = ({ children }) => {
         <SidebarNav />
       </Drawer>
       <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={8} lg={9}>
-              <Paper className={fixedHeightPaper}>
-                {children}
-              </Paper>
+              {children}
             </Grid>
           </Grid>
           <Box pt={4}>
