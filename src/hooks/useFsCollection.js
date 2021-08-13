@@ -20,7 +20,7 @@ const useFsCollection = (path, ready=true) => {
     if (!path && ready) return
     setLoading(true)
     const unsubscribe = db.collection(path).onSnapshot(qs => {
-      const items = qs.docs.map(docSnap => docSnap.data())
+      const items = qs.docs.map(doc => ({ id: doc.id, ...doc.data() }))
       setLoading(false)
       setError(false)
       setData(items)

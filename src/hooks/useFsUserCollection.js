@@ -21,7 +21,7 @@ export const useFsUserCollection = (path) => {
     const fullPath = `/users/${user.uid}${path}`
     setCollection(db.collection(fullPath))
     const unsubscribe = db.collection(fullPath).onSnapshot(qs => {
-      const items = qs.docs.map(docSnap => docSnap.data())
+      const items = qs.docs.map(doc => ({ id: doc.id, ...doc.data() }))
       setLoading(false)
       setError(false)
       setData(items)
